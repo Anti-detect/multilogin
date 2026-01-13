@@ -82,6 +82,8 @@ body {
 .lang-switcher {
     display: flex;
     gap: 10px;
+    align-items: center;
+    position: relative;
 }
 
 .lang-btn {
@@ -93,12 +95,73 @@ body {
     border-radius: var(--border-radius);
     font-weight: 600;
     transition: var(--transition);
+    font-size: 0.9rem;
 }
 
 .lang-btn:hover,
 .lang-btn.active {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+}
+
+/* Language Dropdown */
+.lang-dropdown {
+    position: relative;
+}
+
+.lang-dropdown-btn {
+    padding: 8px 12px;
+    background-color: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.lang-dropdown-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.lang-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 10px;
+    background-color: var(--secondary-color);
+    min-width: 150px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+    z-index: 1001;
+    padding: 5px 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.lang-dropdown:hover .lang-dropdown-content,
+.lang-dropdown-content:hover {
+    display: block;
+}
+
+.lang-dropdown-content .lang-btn {
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-radius: 0;
+    padding: 10px 15px;
+    margin: 2px 0;
+    display: block;
+}
+
+.lang-dropdown-content .lang-btn:hover {
+    background-color: var(--primary-color);
+}
+
+.lang-dropdown-content .lang-btn.active {
+    background-color: rgba(42, 171, 238, 0.3);
 }
 
 /* Hero Section */
@@ -664,6 +727,22 @@ body {
     .header-content {
         flex-direction: column;
         gap: 20px;
+    }
+    
+    .lang-switcher {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .lang-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .lang-dropdown-content {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .promo-box {
