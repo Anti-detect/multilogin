@@ -1,0 +1,64 @@
+(function () {
+    document.addEventListener("DOMContentLoaded", function () {
+
+        if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+        if (typeof elementor !== "undefined" && elementor?.frontend?.isEditMode()) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        ScrollTrigger.matchMedia({
+
+            /* ===============================
+               LARGE DESKTOPS
+            =============================== */
+            "(min-width: 1440px)": function () {
+
+                gsap.fromTo(
+                    ".ui-scroll-image img",
+                    { rotationX: 40, rotationY: 0, rotationZ: 0, y: 0, transformPerspective: 2600 },
+                    {
+                        rotationX: 0, // stronger tilt
+                        rotationY: 0,
+                        rotationZ: 0,
+                        y: 10,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".ui-scroll-wrap",
+                            start: "top 60%",
+                            end: "top 30%",
+                            scrub: true,
+                        }
+                    }
+                );
+
+            },
+
+            /* ===============================
+               LAPTOPS
+            =============================== */
+            "(min-width: 1025px) and (max-width: 1439px)": function () {
+
+                gsap.fromTo(
+                    ".ui-scroll-image img",
+                    { rotationX: 40, rotationY: 0, rotationZ: 0, y: 0, transformPerspective: 2600 },
+                    {
+                        rotationX: 0, // smaller tilt for laptops
+                        rotationY: 0,
+                        rotationZ: 0,
+                        y: 10,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".ui-scroll-wrap",
+                            start: "top 60%",
+                            end: "top 30%",
+                            scrub: true,
+                        }
+                    }
+                );
+
+            }
+
+        });
+
+    });
+})();

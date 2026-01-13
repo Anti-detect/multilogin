@@ -1,0 +1,209 @@
+jQuery(document).ready(function ($) {
+
+    // English
+    // $("span.elementor-button-text:contains('Get started')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Try 3 days for €3.99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/checkout/?planId=271");
+    // });
+    //
+    // $("span.elementor-button-text:contains('GET STARTED')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Try 3 days for €3.99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/checkout/?planId=271");
+    // });
+    //
+    // // Portuguese
+    // $("span.elementor-button-text:contains('Começar agora')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Experimente 3 dias por €3,99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/pt-br/checkout/?planId=271");
+    // });
+    //
+    // $("span.elementor-button-text:contains('COMEÇAR')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Experimente 3 dias por €3,99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/pt-br/checkout/?planId=271");
+    // });
+    //
+    // // Russian
+    // $(".elementor-widget-button:not(.startTrialPricing) span.elementor-button-text:contains('НАЧАТЬ')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Тест на 3 дня за 3,99 €");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/ru-ru/checkout/?planId=271");
+    // });
+    //
+    // $(".elementor-widget-button:not(.startTrialPricing) span.elementor-button-text:not(.startTrialPricing):contains('Начать')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Тест на 3 дня за 3,99 €");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/ru-ru/checkout/?planId=271");
+    // });
+    //
+    // // Vietnamese
+    // $("span.elementor-button-text:contains('BẮT ĐẦU')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Dùng thử 3 ngày với €3,99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/vi-vn/checkout/?planId=271");
+    // });
+    //
+    // $("span.elementor-button-text:contains('bắt đầu')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Dùng thử 3 ngày với €3,99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/vi-vn/checkout/?planId=271");
+    // });
+    //
+    // $("span.elementor-button-text:contains('BẮT ĐẦU')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Dùng thử 3 ngày với €3,99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/vi-vn/checkout/?planId=271");
+    // });
+    //
+    // $("span.elementor-button-text:contains('Bắt đầu')").each(function() {
+    //     // Replace the content
+    //     $(this).text("Dùng thử 3 ngày với €3,99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/vi-vn/checkout/?planId=271");
+    // });
+    //
+    // // Chinese
+    // $("span.elementor-button-text:contains('开始使用')").each(function() {
+    //     // Replace the content
+    //     $(this).text("试用3天仅需€3.99");
+    //     // Replace the grandparent's href attribute
+    //     $(this).parent().parent("a").attr("href", "https://multilogin.com/zh-cn/checkout/?planId=271");
+    // });
+
+
+    // Show more / less button for interlinking
+    let gridsContainer = $('.interlinkingGrids .jet-listing-grid__items');
+    let gridItems = gridsContainer.find('.jet-listing-grid__item');
+
+    // Only proceed if there are more than 8 items
+    if (gridItems.length > 8) {
+        // Append the Show More button **outside** of the item list
+        gridsContainer.after('<div class="showMoreContainer"><a href="javascript:;" class="showMore">Show More</a></div>');
+
+        // Show only the first 8 items initially
+        gridItems.slice(0, 8).addClass('shown');
+        gridItems.not('.shown').hide();
+    }
+
+    // Show More / Show Less functionality (with class toggle & scroll-up effect)
+    $(document).on('click', '.showMore', function () {
+        let hiddenItems = gridsContainer.find('.jet-listing-grid__item').not('.shown');
+        hiddenItems.toggle(300);
+
+        // Toggle class and update button text
+        $(this).toggleClass("showLess").text($(this).hasClass("showLess") ? "Show Less" : "Show More");
+
+        // Scroll to top of the grid when collapsing (only on "Show Less")
+        if (!$(this).hasClass("showLess")) {
+            $('html, body').animate({
+                scrollTop: gridsContainer.offset().top - 300
+            }, 1000); // Adjust speed (500ms)
+        }
+    });
+
+    // Define your supported language slugs (except default 'en' which has no slug)
+    const langs = ['pt-br', 'ru-ru', 'vi-vn'];
+
+    // Detect the first directory in the URL path
+    const path = window.location.pathname.split('/').filter(Boolean);
+    const currentLang = langs.includes(path[0]?.toLowerCase()) ? path[0].toLowerCase() : 'en';
+
+    // Find hidden JetFormBuilder field with class + name attribute and set its value
+    $('.jet-form-builder__field.hidden-field[name="en"], .jet-form-builder__field.hidden-field[name="language"]').val(currentLang);
+
+
+   /* Demo form labels translations */
+
+    jQuery(function ($) {
+
+        // Detect language from URL
+        const path = window.location.pathname.toLowerCase();
+
+        let lang = 'en';
+        if (path.startsWith('/ru-ru/')) lang = 'ru';
+        if (path.startsWith('/pt-br/')) lang = 'pt';
+        if (path.startsWith('/vi-vn/')) lang = 'vi';
+
+
+        /**
+         * Generic translator for JetFormBuilder forms
+         */
+        function translateForm(config) {
+            const form = $(config.selector);
+            if (!form.length) return;
+
+            const labels = form.find('.jet-form-builder__label-text');
+            const fields = form.find('.jet-form-builder__field');
+            const submitBtn = form.find('.jet-form-builder__action-button[type="submit"]');
+
+            const t = config.translations[lang];
+            if (!t) return;
+
+            // labels
+            if (t.labels) {
+                t.labels.forEach((txt, i) => {
+                    if (labels.eq(i).length) labels.eq(i).text(txt);
+                });
+            }
+
+            // placeholders
+            if (t.placeholders) {
+                t.placeholders.forEach((txt, i) => {
+                    if (fields.eq(i).length && txt !== 'none') {
+                        fields.eq(i).attr('placeholder', txt);
+                    }
+                });
+            }
+
+            // submit button
+            if (t.button && submitBtn.length) {
+                submitBtn.text(t.button);
+            }
+        }
+
+
+        /*
+         * ==========================
+         * FORM 1 — demoForm
+         * ==========================
+         */
+        translateForm({
+            selector: '#demoForm',
+            translations: {
+                en: {
+                    labels: ['Name', 'Last Name', 'Email'],
+                    placeholders: ['Enter your name', 'Enter your last name', 'Enter email'],
+                    button: 'WATCH THE DEMO'
+                },
+                ru: {
+                    labels: ['Имя', 'Фамилия', 'Эл. почта'],
+                    placeholders: ['Введите имя', 'Введите фамилию', 'Введите эл. почту'],
+                    button: 'СМОТРЕТЬ ДЕМО'
+                },
+                pt: {
+                    labels: ['Nome', 'Sobrenome', 'E-mail'],
+                    placeholders: ['Digite seu nome', 'Digite seu sobrenome', 'Digite seu e-mail'],
+                    button: 'ASSISTIR DEMO'
+                },
+                vi: {
+                    labels: ['Tên', 'Họ', 'Email'],
+                    placeholders: ['Nhập tên', 'Nhập họ', 'Nhập email'],
+                    button: 'XEM DEMO'
+                }
+            }
+        });
+    });
+
+});

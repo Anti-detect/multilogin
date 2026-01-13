@@ -1,0 +1,38 @@
+jQuery(function ($) {
+
+    let domainCheckerField = $('.domain-checker-form input[name="domain_name"]');
+
+    // 👇 Add ALL popup IDs here
+    const popupIds = [18505, 82187, 82267, 82456];
+
+    function updateDomainHolder() {
+        let domainValue = domainCheckerField.val() || '';
+
+        let domainHiddenField = $('.elementor-popup-modal')
+            .find('input[name="submitted_domain_name"]');
+
+        if (domainHiddenField.length) {
+            domainHiddenField.val(domainValue);
+        }
+
+        $('.domain-name').each(function () {
+            if ($(this).is('input, textarea')) {
+                $(this).val(domainValue);
+            } else {
+                $(this).text(domainValue);
+            }
+        });
+    }
+
+    domainCheckerField.on('input', updateDomainHolder);
+
+    $(document).on('elementor/popup/show', function (event, id) {
+
+        // ✔ run only if the popup is in our list
+        if (popupIds.includes(id)) {
+            setTimeout(updateDomainHolder, 100);
+        }
+    });
+
+    updateDomainHolder();
+});

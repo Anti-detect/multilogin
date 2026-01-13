@@ -1,3 +1,29 @@
+// Scroll Reveal Animation
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, index * 100); // Stagger animation
+        }
+    });
+}, observerOptions);
+
+// Observe all elements with animate-on-scroll class
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach(el => observer.observe(el));
+    
+    // Also observe platform icons specifically
+    const platformIcons = document.querySelectorAll('.platform-icon');
+    platformIcons.forEach(el => observer.observe(el));
+});
+
 // Language Switcher
 const langButtons = document.querySelectorAll('.lang-btn');
 const langContents = document.querySelectorAll('.lang-content');
