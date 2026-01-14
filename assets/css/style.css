@@ -113,6 +113,7 @@ body {
 /* Language Dropdown */
 .lang-dropdown {
     position: relative;
+    pointer-events: none; /* Prevent dropdown from blocking other elements */
 }
 
 .lang-dropdown-btn {
@@ -124,7 +125,7 @@ body {
     border-radius: var(--border-radius);
     font-weight: 600;
     transition: var(--transition);
-    font-size: 0.9rem;
+    pointer-events: auto; /* Allow clicks on the button itself */
 }
 
 .lang-dropdown-btn:hover {
@@ -147,9 +148,10 @@ body {
     overflow-y: auto;
 }
 
-.lang-dropdown:hover .lang-dropdown-content,
+.lang-dropdown-btn:hover + .lang-dropdown-content,
 .lang-dropdown-content:hover {
     display: block;
+    pointer-events: auto; /* Allow clicks inside the dropdown */
 }
 
 .lang-dropdown-content .lang-btn {
